@@ -121,6 +121,28 @@ const routes: RouteRecordRaw[] = [
       }
     ]
   },
+  /* vue3 study */
+  {
+    path: '/vue3-study',
+    name: 'Vue3Study',
+    component: Layout,
+    redirect: '/vue3-study/combine-fun',
+    meta: {
+      title: '菜单',
+      icon: 'Menu'
+    },
+    children: [
+      {
+        path: 'combine-fun',
+        name: 'CombineFun',
+        component: () => import('@/views/vue3-study/combineFun/index.vue'),
+        meta: {
+          title: '组合式函数',
+          icon: 'FolderRemove'
+        }
+      }
+    ]
+  },
   /* 404页面 */
   {
     path: '/:pathMatch(.*)*',
