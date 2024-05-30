@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, type Directive } from 'vue'
 import App from './App.vue'
 import router from './utils'
 import './utils/rem'
@@ -15,8 +15,14 @@ import '@/assets/iconfont/iconfont.css'
 import '@/assets/iconfont/iconfont.js'
 // 使用国际化 vue-i18n
 import I18n from '@/language/index'
+import * as directives from '@/directives'
 
 const app = createApp(App)
+
+// 自定义指令
+Object.keys(directives).forEach((key) => {
+  app.directive(key, (directives as { [key: string]: Directive })[key])
+})
 
 // 注册全局 element-icons 组件
 Object.keys(Icons).forEach((key) => {

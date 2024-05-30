@@ -5,7 +5,8 @@
       Load post id:
       <button v-for="i in 5" @click="id = `${i}`">{{ i }}</button>
 
-      <el-input v-model="inputVal" ></el-input>
+      <!-- <el-input v-model="inputVal" v-focus ></el-input> -->
+      <input v-model="inputVal" v-focus />
 
       <div v-if="error" >
         <p>Oops! Error encountered: {{ error.message }}</p>
