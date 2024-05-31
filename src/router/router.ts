@@ -143,6 +143,28 @@ const routes: RouteRecordRaw[] = [
       }
     ]
   },
+  /* HTML5 学习 */
+  {
+    path: '/html5',
+    name: 'Html5',
+    component: Layout,
+    redirect: '/html5/canvas',
+    meta: {
+      title: 'HTML5',
+      icon: 'Menu'
+    },
+    children: [
+      {
+        path: 'canvas',
+        name: 'Canvas',
+        component: () => import('@/views/html5/Canvas/index.vue'),
+        meta: {
+          title: 'canvas',
+          icon: 'FolderRemove'
+        }
+      }
+    ]
+  },
   /* 404页面 */
   {
     path: '/:pathMatch(.*)*',
