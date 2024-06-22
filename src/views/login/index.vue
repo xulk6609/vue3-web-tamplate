@@ -141,7 +141,7 @@ $color2: #15104b;
     }
   }
   .login-content {
-    width: 424px;
+    width: 500px;
     height: 708px;
     margin-top: -6%;
     background: #fff;

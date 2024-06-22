@@ -4,10 +4,11 @@ import router from './utils'
 import './utils/rem'
 
 import '@/styles/main.scss'
+import '@/styles/tailwind.css'
 // 统一导入 element 图标
 import * as Icons from '@element-plus/icons-vue'
 // 引入element样式
-import 'element-plus/dist/index.css'
+// import 'element-plus/dist/index.css'
 // 使用pinai store
 import pinia from '@/store/index'
 /* 引入iconfont */

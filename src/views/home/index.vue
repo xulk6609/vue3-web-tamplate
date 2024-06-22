@@ -32,16 +32,39 @@
     </el-menu-item>
   </el-menu>
   <div>{{ $t('tabs.closeCurrent') }}</div>
+
+  <div class="text-3xl font-bold underline">Hello world!</div>
+  <p class="text-blue-600">The quick brown fox...</p>
+
+  <div>
+    <adPagination
+      :currentPage="pageData.currentPage"
+      :pageSize="pageData.pageSize"
+      :total="pageData.total"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import adPagination from '@/components/adPagination/index.vue'
 
 defineOptions({
   name: 'Home'
 })
 
 const isCollapse = ref(false)
+
+const pageData = ref({
+  currentPage: 1,
+  pageSize: 10,
+  total: 0
+})
+
+const handleSizeChange = () => {}
+const handleCurrentChange = () => {}
 </script>
 
 <style>

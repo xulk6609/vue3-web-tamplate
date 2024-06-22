@@ -14,6 +14,7 @@
       <el-footer class="container-footer" v-if="settingConfig.footer">
         <Footer />
       </el-footer>
+      <el-backtop target=".el-main" :right="80" :bottom="80" />
     </el-container>
   </el-container>
 </template>
@@ -63,5 +64,8 @@ const settingConfig = storeToRefs(globalStore).settingConfig
     align-items: center;
     justify-content: center;
   }
+}
+:deep(.el-backtop__icon) {
+  color: #fa4756;
 }
 </style>

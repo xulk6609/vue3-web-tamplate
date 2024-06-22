@@ -16,8 +16,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { ElPagination } from 'element-plus'
+import { computed } from 'vue'
+// import { ElPagination } from 'element-plus'
 const emit = defineEmits(['size-change', 'current-change'])
 // 定义props并转换为ref以便于在模板中使用
 const props = defineProps({
