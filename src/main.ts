@@ -8,7 +8,11 @@ import '@/styles/tailwind.css'
 // 统一导入 element 图标
 import * as Icons from '@element-plus/icons-vue'
 // 引入element样式
+/* 全局 */
 // import 'element-plus/dist/index.css'
+/* 如果使用 unplugin-element-plus 并且只使用组件 API，你需要手动导入样式  */
+import 'element-plus/es/components/message/style/css'
+import 'element-plus/es/components/message-box/style/css'
 // 使用pinai store
 import pinia from '@/store/index'
 /* 引入iconfont */
