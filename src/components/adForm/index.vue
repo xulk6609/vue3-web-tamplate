@@ -23,7 +23,7 @@
             <el-input
               :disabled="item.disabled"
               @blur="handleBlur($event, item)"
-              :size="item.size ?? 'large'"
+              :size="item.size"
               clearable
               :show-password="item.showPassword"
               :placeholder="item.placeholder ? item.placeholder : '请输入'"
@@ -49,8 +49,9 @@
             <el-select
               v-model="formData[item.prop]"
               @change="handleChange($event, item)"
+              :multiple="item.multiple"
               class="common_select"
-              :size="item.size ?? 'large'"
+              :size="item.size"
               :placeholder="item.placeholder ? item.placeholder : '请选择'"
             >
               <el-option
@@ -72,7 +73,7 @@
           >
             <el-date-picker
               class="form-date"
-              :size="item.size ?? 'large'"
+              :size="item.size"
               v-model="formData[item.prop]"
               value-format="YYYY-MM-DD HH:mm:ss"
               type="date"
@@ -90,7 +91,7 @@
           >
             <el-date-picker
               class="form-date"
-              :size="item.size ?? 'large'"
+              :size="item.size"
               v-model="formData[item.prop]"
               value-format="YYYY-MM-DD HH:mm:ss"
               :default-time="item.defaultTime"
@@ -109,7 +110,7 @@
           >
             <el-date-picker
               class="form-date"
-              :size="item.size ?? 'large'"
+              :size="item.size"
               v-model="formData[item.prop]"
               start-placeholder=" "
               end-placeholder=" "
@@ -121,14 +122,63 @@
             </el-date-picker>
           </el-form-item>
         </template>
+
+        <!-- 上传 -->
+        <template v-if="item.type === 'upload'">
+          <el-form-item
+            :label="item.label"
+            :prop="item.prop"
+            :label-width="item.labelWidth"
+          >
+            <adUpload
+              :action="item.action"
+              :limit="item.limit || 1"
+              :multiple="item.multiple || false"
+              :list-type="item.listType || 'picture-card'"
+              v-model:file-list="formData[item.prop]"
+              :on-success="onSuccess"
+            />
+          </el-form-item>
+        </template>
+
+        <!-- switch -->
+        <template v-if="item.type === 'switch'">
+          <el-form-item
+            :label="item.label"
+            :prop="item.prop"
+            :label-width="item.labelWidth"
+          >
+            <el-switch v-model="formData[item.prop]" />
+          </el-form-item>
+        </template>
+
+        <!-- radio -->
+        <template v-if="item.type === 'radio'">
+          <el-form-item
+            :label="item.label"
+            :prop="item.prop"
+            :label-width="item.labelWidth"
+          >
+            <el-radio-group v-model="formData[item.prop]">
+              <el-radio
+                v-for="opt in item.options"
+                :key="opt.value"
+                :value="opt.value"
+                >{{ opt.label }}</el-radio
+              >
+            </el-radio-group>
+          </el-form-item>
+        </template>
       </el-col>
     </el-row>
   </el-form>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { FormItem, Props } from './form.d'
+import adUpload from '@/components/adUpload/index.vue'
+import type { UploadProps } from 'element-plus'
 
 // 注意 defineProps的ts类型 vue3.3版本以下不能从外部导入
 // interface Props {
@@ -153,19 +203,28 @@ const props = withDefaults(defineProps<Props>(), {
   }
 })
 
-// emit
-const emit = defineEmits(['blur', 'change'])
+// emits
+const emits = defineEmits(['blur', 'change', 'uploadSuccess'])
+const formData = computed(() => props.data)
 
-const formData = ref(props.data)
 const formRef = ref()
 defineExpose({ formRef })
 
 const handleBlur = (event: FocusEvent, item: FormItem) => {
-  emit('blur', event, item)
+  emits('blur', event, item)
 }
 
 const handleChange = (event: MouseEvent, item: FormItem) => {
-  emit('change', event, item)
+  emits('change', event, item)
+}
+
+/* 上传 */
+const onSuccess: UploadProps['onSuccess'] = (
+  response: any,
+  uploadFile,
+  uploadFiles
+) => {
+  emits('uploadSuccess', response, uploadFile, uploadFiles)
 }
 </script>
 

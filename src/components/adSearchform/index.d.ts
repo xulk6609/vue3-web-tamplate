@@ -17,12 +17,8 @@ export interface FormItem {
   defaultTime?: string
   labelWidth: string
   size: 'large' | 'default' | 'small'
-  /* 上传 */
-  action?: string
   multiple?: boolean
-  fileList?: Array<any>
-  limit?: number
-  listType?: 'text' | 'picture' | 'picture-card'
+  maxlength?: number
 }
 
 export interface FormData {
