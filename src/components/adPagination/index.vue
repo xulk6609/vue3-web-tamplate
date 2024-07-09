@@ -17,7 +17,6 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-// import { ElPagination } from 'element-plus'
 const emit = defineEmits(['size-change', 'current-change'])
 // 定义props并转换为ref以便于在模板中使用
 const props = defineProps({
@@ -78,17 +77,16 @@ function emitFn(eventName: any, ...args: any[]) {
 <style lang="scss" scoped>
 $borderColor: #686a7d;
 .aid-pagination {
-  width: calc(100% - 40px);
-  height: 64px;
-  background: #ffffff;
+  width: 100%;
+  min-height: 64px;
   border: none;
-  border-top: 1px solid #e9e9ec;
   border-radius: 0 0 16px 16px;
-  padding-right: 40px;
+  padding-right: inherit;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   font-family: Abril Fatface !important;
+  background-color: #fff;
   :deep(.el-pager li) {
     border: 1.5px solid $borderColor;
     font-family: Abril Fatface;

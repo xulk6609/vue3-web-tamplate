@@ -1,7 +1,7 @@
 <template>
   <div class="aid-upload">
     <el-upload
-      action="/api/Upload/UploadFile"
+      :action="action"
       :headers="{ Authorization: 'Bearer ' + token }"
       v-bind="{ ...$attrs }"
       :on-preview="handlePictureCardPreview"
@@ -19,8 +19,14 @@ import { ref } from 'vue'
 import type { UploadProps } from 'element-plus'
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
-const emit = defineEmits(['uploadSuccess'])
 const token = localStorage.getItem('token') ?? ''
+
+defineProps({
+  action: {
+    type: String,
+    default: '/api/Upload/UploadFile'
+  }
+})
 
 const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
   dialogImageUrl.value = uploadFile.url!
