@@ -97,6 +97,7 @@
                 start-placeholder="开始时间"
                 end-placeholder="结束时间"
                 range-separator="-"
+                :default-time="item.defaultTime"
                 format="YYYY-MM-DD HH:mm:ss"
                 value-format="YYYY-MM-DD HH:mm:ss"
                 type="datetimerange"

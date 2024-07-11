@@ -136,7 +136,7 @@
               :multiple="item.multiple || false"
               :list-type="item.listType || 'picture-card'"
               v-model:file-list="formData[item.prop]"
-              :on-success="onSuccess"
+              v-bind="{ ...item }"
             />
           </el-form-item>
         </template>
@@ -178,7 +178,6 @@
 import { ref, computed } from 'vue'
 import { FormItem, Props } from './form.d'
 import adUpload from '@/components/adUpload/index.vue'
-import type { UploadProps } from 'element-plus'
 
 // 注意 defineProps的ts类型 vue3.3版本以下不能从外部导入
 // interface Props {
@@ -204,7 +203,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 // emits
-const emits = defineEmits(['blur', 'change', 'uploadSuccess'])
+const emits = defineEmits(['blur', 'change'])
 const formData = computed(() => props.data)
 
 const formRef = ref()
@@ -216,15 +215,6 @@ const handleBlur = (event: FocusEvent, item: FormItem) => {
 
 const handleChange = (event: MouseEvent, item: FormItem) => {
   emits('change', event, item)
-}
-
-/* 上传 */
-const onSuccess: UploadProps['onSuccess'] = (
-  response: any,
-  uploadFile,
-  uploadFiles
-) => {
-  emits('uploadSuccess', response, uploadFile, uploadFiles)
 }
 </script>
 
