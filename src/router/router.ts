@@ -121,6 +121,28 @@ const routes: RouteRecordRaw[] = [
       }
     ]
   },
+  /* echarts */
+  {
+    path: '/echarts',
+    name: 'echarts',
+    component: Layout,
+    redirect: '/echarts/line',
+    meta: {
+      title: 'Echarts',
+      icon: 'Menu'
+    },
+    children: [
+      {
+        path: 'line',
+        name: 'Line',
+        component: () => import('@/views/echarts/line/index.vue'),
+        meta: {
+          title: '折线图',
+          icon: 'FolderRemove'
+        }
+      }
+    ]
+  },
   /* 404页面 */
   {
     path: '/:pathMatch(.*)*',
