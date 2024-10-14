@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import winnerCarousel from '@/components/carousel/test.vue'
+import winnerCarousel from '@/components/carousel/top100Carousel.vue'
 import testImg from '@/assets/images/home/test2.png'
 
 // Import Swiper Vue.js components
