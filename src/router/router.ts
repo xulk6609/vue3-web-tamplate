@@ -121,6 +121,28 @@ const routes: RouteRecordRaw[] = [
       }
     ]
   },
+  // fabric
+  {
+    path: '/fabric',
+    name: 'fabric',
+    component: Layout,
+    redirect: '/fabric/curvetext',
+    meta: {
+      title: 'fabric',
+      icon: 'Menu'
+    },
+    children: [
+      {
+        path: 'curvetext',
+        name: 'curvetext',
+        component: () => import('@/views/fabric/curvetext/index.vue'),
+        meta: {
+          title: '曲线文字',
+          icon: 'FolderRemove'
+        }
+      }
+    ]
+  },
   /* echarts */
   {
     path: '/echarts',

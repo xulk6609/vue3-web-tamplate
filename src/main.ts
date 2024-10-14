@@ -20,6 +20,7 @@ import '@/assets/iconfont/iconfont.css'
 import '@/assets/iconfont/iconfont.js'
 // 使用国际化 vue-i18n
 import I18n from '@/language/index'
+import '@/utils/curvedText.ts'
 
 const app = createApp(App)
 
