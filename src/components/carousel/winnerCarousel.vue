@@ -4,7 +4,12 @@
       effect="cards"
       :grabCursor="true"
       :centeredSlides="true"
-      :initialSlide="1"
+      :loop="true"
+      :autoplay="{
+        delay: 3000,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true
+      }"
       :pagination="{
         type: 'fraction'
       }"
@@ -55,19 +60,6 @@ import storeImg from '@/assets/images/home/store.png'
 import orderImg from '@/assets/images/home/order.png'
 import testImg from '@/assets/images/home/test2.png'
 
-// const props = defineProps({
-//   data: {
-//     type: Array,
-//     default: () => []
-//   }
-// })
-
-// // const globalStore = GlobalStore()
-
-// const items: any = computed(() => {
-//   return props.data
-// })
-
 defineExpose({
   setItems: (arr: any) => {
     items.value = arr
@@ -85,6 +77,7 @@ const items = ref([])
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+  border: 1px solid red;
 }
 
 .winner-swiper {
