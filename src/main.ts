@@ -21,8 +21,11 @@ import '@/assets/iconfont/iconfont.js'
 // 使用国际化 vue-i18n
 import I18n from '@/language/index'
 import '@/utils/curvedText.ts'
+// 添加swiper
+import { register } from 'swiper/element/bundle'
 
 const app = createApp(App)
+register()
 
 // 注册全局 element-icons 组件
 Object.keys(Icons).forEach((key) => {

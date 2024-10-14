@@ -59,6 +59,46 @@ const routes: RouteRecordRaw[] = [
       }
     ]
   },
+  /* swiper */
+  {
+    path: '/swiper',
+    name: 'Layout',
+    component: Layout,
+    redirect: '/swiper/swiper1',
+    meta: {
+      title: 'swiper',
+      icon: 'Headset'
+    },
+    children: [
+      {
+        path: 'swiper1',
+        name: 'swiper1',
+        component: () => import('@/views/swiper/swiper1/index.vue'),
+        meta: {
+          title: 'swiper',
+          icon: 'Headset'
+        }
+      },
+      {
+        path: 'swiper2',
+        name: 'swiper2',
+        component: () => import('@/views/swiper/swiper2/index.vue'),
+        meta: {
+          title: 'swiper2',
+          icon: 'Headset'
+        }
+      },
+      {
+        path: 'swiper3',
+        name: 'swiper3',
+        component: () => import('@/views/swiper/swiper3/index.vue'),
+        meta: {
+          title: 'swiper3',
+          icon: 'Headset'
+        }
+      }
+    ]
+  },
   /* 嵌套菜单 */
   {
     path: '/menus',
