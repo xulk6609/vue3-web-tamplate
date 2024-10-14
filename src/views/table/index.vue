@@ -1,6 +1,19 @@
 <template>
   <div>
-    <Table :tableData="tableData" :columnList="columnList" />
+    <Table :tableData="tableData" :columnList="columnList">
+      <template #header-Shift="{ scope }">
+        <div class="text-[red] text-[24px] font-bold">
+          {{ scope.item.label }}
+        </div>
+      </template>
+
+      <template #Shift="{ scope }">
+        <div class="text-[red] text-[24px] font-bold">
+          {{ scope.row.Shift }}
+        </div>
+        <div>{{ scope.row.customerName }}</div>
+      </template>
+    </Table>
   </div>
 </template>
 

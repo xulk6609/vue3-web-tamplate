@@ -44,13 +44,13 @@ const routes: RouteRecordRaw[] = [
   /* 表格 */
   {
     path: '/table',
-    name: 'Layout',
+    name: 'Table',
     component: Layout,
     redirect: '/table/index',
     children: [
       {
         path: 'index',
-        name: 'table',
+        name: 'Table',
         component: () => import('@/views/table/index.vue'),
         meta: {
           title: '表格',
