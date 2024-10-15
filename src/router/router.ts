@@ -59,6 +59,24 @@ const routes: RouteRecordRaw[] = [
       }
     ]
   },
+  /* axios */
+  {
+    path: '/axios',
+    name: 'Axios',
+    component: Layout,
+    redirect: '/axios/index',
+    children: [
+      {
+        path: 'index',
+        name: 'Axios',
+        component: () => import('@/views/axios/cancelToken/index.vue'),
+        meta: {
+          title: 'cancelToken',
+          icon: 'Headset'
+        }
+      }
+    ]
+  },
   /* swiper */
   {
     path: '/swiper',

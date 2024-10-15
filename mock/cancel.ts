@@ -1,6 +1,6 @@
 export default [
   {
-    url: '/login',
+    url: '/cancel',
     method: 'post',
     response: ({ body }) => {
       if (body.username === 'admin' && body.password === '123456') {

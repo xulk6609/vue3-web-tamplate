@@ -21,3 +21,13 @@ export function uploadFile(data: any) {
     data
   })
 }
+
+// 取消token 测试接口
+export function testCancel(data: any, cancelToken?: any) {
+  return request({
+    url: '/cancel',
+    method: 'post',
+    data,
+    cancelToken
+  })
+}

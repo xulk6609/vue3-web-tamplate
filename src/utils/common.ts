@@ -36,9 +36,34 @@ export function moveToErr() {
     }, 800)
   }
 }
-export const UseSearch = (key: string, json?: boolean) => {
+
+/* 路径值获取 */
+export function UseSearch(key: string, json?: boolean) {
   const location = window.location
   const search = new URLSearchParams(location.search)
   const value = json ? JSON.parse(search.get(key) ?? '') : search.get(key)
   return value
+}
+
+/* 限制并发 */
+export async function asyncPool(poolLimit, iterable, iteratorFn) {
+  // 用于保存所有异步请求
+  const ret = []
+  // 用于保存正在进行的请求
+  const executing = new Set()
+  for (const item of iterable) {
+    // 构造出请求 Promise
+    const p = Promise.resolve().then(() => iteratorFn(item, iterable))
+    ret.push(p)
+    executing.add(p)
+    // 请求执行结束后从正在进行的数组中移除
+    const clean = () => executing.delete(p)
+    p.then(clean).catch(clean)
+    // 如果正在执行的请求数大于并发数，就使用 Promise.race 等待一个最快执行完的请求
+    if (executing.size >= poolLimit) {
+      await Promise.race(executing)
+    }
+  }
+  // 返回所有结果
+  return Promise.all(ret)
 }

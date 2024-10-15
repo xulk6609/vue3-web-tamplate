@@ -1,5 +1,18 @@
 import { fabric } from 'fabric'
 
+// 定义 drawCurve 函数的参数类型
+interface DrawCurveOptions {
+  curve: number
+  diameter: number
+  fontSize: number
+  charSpacing: number
+  fill: string
+  fontFamily: string
+  fontWeight: string
+  fontStyle: string
+  text: string
+}
+
 // function getActualWidthOfChars(text, options = {}) {
 //   const { fontSize = 14, fontFamily = 'Microsoft YaHei' } = options
 //   const canvas = document.createElement('canvas')
@@ -13,7 +26,11 @@ import { fabric } from 'fabric'
 // }
 
 // 扩展 fabric 曲线文字
-function drawCurve(options, ctx, that) {
+function drawCurve(
+  options: DrawCurveOptions,
+  ctx: CanvasRenderingContext2D,
+  that: fabric.Object
+) {
   const {
     curve,
     diameter,
@@ -39,10 +56,10 @@ function drawCurve(options, ctx, that) {
 
   const selectCanvasWidth =
     /* textWidth +  */ diameter * 2 + fontSize + charSpacing
-  that.set('width', parseInt(selectCanvasWidth))
-  that.set('height', parseInt(selectCanvasWidth))
+  that.set('width', parseInt(selectCanvasWidth.toString()))
+  that.set('height', parseInt(selectCanvasWidth.toString()))
   // that.setCoords()
-  that.canvas.requestRenderAll()
+  that.canvas?.requestRenderAll()
 
   for (let index = 0; index < text.length; index++) {
     const character = text.charAt(index)
@@ -61,11 +78,17 @@ function drawCurve(options, ctx, that) {
   ctx.restore()
 }
 
-fabric.CurveText = fabric.util.createClass(fabric.IText, {
+// 定义 CurveText 类
+interface CurveTextOptions extends fabric.ITextOptions {
+  curve?: number
+  diameter?: number
+}
+
+;(fabric as any).CurveText = fabric.util.createClass(fabric.IText, {
   type: 'curveText',
-  initialize(text = '', options = {}) {
+  initialize(text: string = '', options: CurveTextOptions = {}) {
     if (!text) {
-      text = options.text
+      text = options.text || ''
     }
     this.callSuper('initialize', text, options)
     this.set('curve', options.curve || 0)
@@ -80,7 +103,7 @@ fabric.CurveText = fabric.util.createClass(fabric.IText, {
     })
   },
 
-  _render(ctx) {
+  _render(ctx: CanvasRenderingContext2D) {
     if (this.curve > 0) {
       drawCurve({ ...this }, ctx, this)
     } else {
@@ -89,9 +112,11 @@ fabric.CurveText = fabric.util.createClass(fabric.IText, {
     }
     this.setCoords()
   }
-})
-
-fabric.CurveText.fromObject = function (object, callback) {
+}) // 静态方法，用于从对象创建 CurveText 实例
+;(fabric as any).CurveText.fromObject = function (
+  object: any,
+  callback: (obj: fabric.Object) => void
+) {
   return fabric.Object._fromObject('CurveText', object, callback, 'aProp')
 }
 

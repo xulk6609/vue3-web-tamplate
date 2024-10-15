@@ -77,9 +77,14 @@ const signIn = (formEl: FormInstance | undefined) => {
         username: formData.username,
         password: formData.password
       }
-      logIn(postData)
-      ElMessage.success('登录成功!')
-      router.push('/home')
+      logIn(postData).then((res) => {
+        if (res.success) {
+          ElMessage.success('登录成功!')
+          router.push('/home')
+        } else {
+          ElMessage.error(res.message)
+        }
+      })
     }
   })
 }
