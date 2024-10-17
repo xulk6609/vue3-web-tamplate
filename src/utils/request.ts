@@ -33,7 +33,6 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response: AxiosResponse) => {
     const res = response.data as ResponseData | Blob
-
     if (res instanceof Blob) {
       // 如果是文件流，直接返回
       return response
