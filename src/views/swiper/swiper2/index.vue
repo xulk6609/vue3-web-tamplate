@@ -9,7 +9,13 @@ import { ref, onMounted } from 'vue'
 import top100Carousel from '@/components/carousel/top100Carousel.vue'
 import testImg from '@/assets/images/home/test2.png'
 
-const rightData = ref([])
+interface RightDataItem {
+  mainImage: string
+  title: string
+  count: string
+}
+
+const rightData = ref<RightDataItem[]>([])
 
 onMounted(() => {
   setTimeout(() => {

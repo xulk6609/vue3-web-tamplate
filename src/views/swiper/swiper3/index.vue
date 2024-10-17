@@ -16,6 +16,13 @@ import testImg from '@/assets/images/home/test2.png'
 // import 'swiper/css'
 // import 'swiper/css/effect-cards'
 
+// 定义单个数据项的类型
+interface RightDataItem {
+  mainImage: string
+  title: string
+  count: string
+}
+
 onMounted(() => {
   setTimeout(() => {
     rightData.value = [
@@ -38,7 +45,7 @@ onMounted(() => {
   }, 300)
 })
 
-const rightData = ref([])
+const rightData = ref<RightDataItem[]>([])
 </script>
 
 <style lang="scss" scoped>

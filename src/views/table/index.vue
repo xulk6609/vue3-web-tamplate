@@ -61,7 +61,7 @@ const columnList = [
 ]
 
 onMounted(() => {
-  const timeout = (i) =>
+  const timeout = (i: number) =>
     new Promise((resolve) => setTimeout(() => resolve(i), i))
   asyncPool(2, [1000, 5000, 3000, 2000], timeout).then((results) => {
     console.log(results)

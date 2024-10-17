@@ -22,53 +22,66 @@
 
 <script setup lang="ts">
 import { fabric } from 'fabric'
-import { onMounted, ref } from 'vue'
+// 引入文字曲线
+import { onMounted, ref, watch, nextTick } from 'vue'
 
-let canvas = null
-const curveData = ref()
+let canvas: any = null
+let nowSelectObj = {}
+let curveData = {}
 
 const textInfo = ref({
+  text: 'Text on a path',
   curve: 0,
   diameter: 30,
   charSpacing: 20,
   fontSize: 36
 })
 
-const addListeners = () => {
-  // 监听选中对象的事件
-  canvas.on('selection:created', (e) => {
-    const selectedObject = e.selected[0] // 获取选中的第一个对象
-    if (selectedObject) {
-      console.log('Selected Object:', selectedObject)
-      // 可以访问选中对象的相关属性
-      console.log('Type:', selectedObject.type)
-      console.log('Text:', selectedObject.text) // 如果是文本对象
-      console.log('Font Size:', selectedObject.fontSize)
-      console.log('Curve:', selectedObject.curve) // 如果是自定义的 CurveText
-      console.log('Diameter:', selectedObject.diameter)
-    }
-  })
+watch(
+  textInfo.value,
+  () => {
+    nextTick(() => {
+      const info = {
+        text: textInfo.value.text,
+        curve: textInfo.value.curve,
+        diameter: textInfo.value.diameter,
+        charSpacing: textInfo.value.charSpacing,
+        fontSize: textInfo.value.fontSize
+      }
+      nowSelectObj.set(info)
+      nowSelectObj.setCoords() // 更新坐标
+      canvas.renderAll()
+    })
+  },
+  {
+    deep: true
+  }
+)
 
-  // 如果需要监听每次选中对象的变化，使用以下事件：
-  canvas.on('object:selected', (e) => {
-    const selectedObject = e.target
-    console.log('Selected Object in object:selected:', selectedObject)
+const addListeners = () => {
+  // 监听对象被选中的事件
+  canvas.getObjects().forEach((obj) => {
+    obj.on('selected', function (e) {
+      console.log('对象被选中:', e, obj)
+      nowSelectObj = obj
+    })
   })
 }
 
 const initFabric = () => {
   canvas = new fabric.Canvas('canvas', { width: 1200, height: 780 })
-
-  curveData.value = new fabric.CurveText('Text on a path', {
-    textAlign: 'center',
+  curveData = new fabric.CurveText(textInfo.value.text, {
+    top: 200,
+    left: 200,
+    id: 0o1,
     fontSize: textInfo.value.fontSize,
     curve: textInfo.value.curve,
     diameter: textInfo.value.diameter,
     charSpacing: textInfo.value.charSpacing
   })
 
-  canvas.add(curveData.value)
-
+  canvas.add(curveData)
+  canvas.renderAll()
   addListeners()
 }
 

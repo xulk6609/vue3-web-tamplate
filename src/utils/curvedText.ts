@@ -112,7 +112,8 @@ interface CurveTextOptions extends fabric.ITextOptions {
     }
     this.setCoords()
   }
-}) // 静态方法，用于从对象创建 CurveText 实例
+})
+// 静态方法，用于从对象创建 CurveText 实例
 ;(fabric as any).CurveText.fromObject = function (
   object: any,
   callback: (obj: fabric.Object) => void

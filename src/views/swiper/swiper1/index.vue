@@ -36,10 +36,10 @@ const spaceBetween = ref(10)
 //   const [swiper, progress] = e.detail
 //   console.log(progress)
 // }
-const onSlideChange = (e) => {
-  const [swiper, progress] = e.detail
+const onSlideChange = (/* e */) => {
   // const [swiper, progress] = e.detail
   // console.log('slide changed', swiper.activeIndex)
-  console.log('9989', swiper.realIndex)
+  // const [swiper, progress] = e.detail
+  // console.log('9989', swiper.realIndex)
 }
 </script>
