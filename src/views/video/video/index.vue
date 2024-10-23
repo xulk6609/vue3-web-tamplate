@@ -32,6 +32,7 @@
               controlslist="nodownload nofullscreen noremoteplayback"
               :ref="`video${index}`"
               :canSeeTime="30"
+              :seekTime="item.seekTime"
               @mouseover="showControls(index)"
               @mouseleave="hideControls(index)"
               @canSeePause="handleCanSeePause"
@@ -71,6 +72,7 @@ const videoList = ref([
     id: '1837089578383200256',
     type: 0,
     videoName: 'create your first products',
+    seekTime: 20,
     videoDesc:
       'This course is a USAdrop overview going into the ins and outs of the supplier.',
     status: 0,

@@ -2,7 +2,7 @@
   <div class="ud-video">
     <video
       v-bind="{ ...$attrs }"
-      ref="udvideo"
+      ref="videoRef"
       @seeking="handleSeeking"
       @timeupdate="handleTimeupdate"
       @seeked="handleSeeked"
@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, defineEmits, watch } from 'vue'
+import { ref, defineProps, defineEmits, watch, nextTick } from 'vue'
 
 const props = defineProps({
   src: {
@@ -28,6 +28,10 @@ const props = defineProps({
   },
   // 可以查看视频的时间，为0不限制，超出则暂停
   canSeeTime: {
+    type: Number,
+    default: 0
+  },
+  seekTime: {
     type: Number,
     default: 0
   }
@@ -78,6 +82,21 @@ const handleSeeked = () => {
   }
   emit('seekedSuccess')
 }
+
+watch(
+  () => props.seekTime,
+  () => {
+    nextTick(() => {
+      const currentVideo: any = videoRef?.value
+      if (currentVideo) {
+        currentVideo.currentTime = props.seekTime
+      }
+    })
+  },
+  {
+    immediate: true
+  }
+)
 
 // 这里可以添加 videoRef 的时间更新监听
 </script>

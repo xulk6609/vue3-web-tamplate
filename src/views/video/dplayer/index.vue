@@ -85,11 +85,11 @@ const videoList = ref([
   }
 ])
 
-const showControls = (index) => {
+const showControls = (index: number) => {
   videoList.value[index].controls = true
 }
 
-const hideControls = (index) => {
+const hideControls = (index: number) => {
   videoList.value[index].controls = false
 }
 

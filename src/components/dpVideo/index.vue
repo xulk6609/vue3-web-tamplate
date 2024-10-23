@@ -1,20 +1,10 @@
 <template>
-  <div class="ud-video">
-    <video
-      v-bind="{ ...$attrs }"
-      ref="udvideo"
-      @seeking="handleSeeking"
-      @timeupdate="handleTimeupdate"
-      @seeked="handleSeeked"
-    >
-      <!-- 这里将事件传递给 video -->
-      <source :src="src" :type="type" />
-    </video>
-  </div>
+  <div id="dplayer"></div>
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, defineEmits, watch } from 'vue'
+import { ref, defineProps, defineEmits, watch, onMounted } from 'vue'
+import DPlayer from 'dplayer'
 
 const props = defineProps({
   src: {
@@ -33,53 +23,44 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['canSeePause', 'seekedSuccess'])
-const isSeeking = ref(false)
-const videoRef = ref(null)
+let dp: any = null
 
-const handleSeeking = () => {
-  const currentVideo: any = videoRef.value
-  const videoTime = currentVideo.currentTime.toFixed(2)
-
-  // 检查标志并处理
-  if (isSeeking.value || props.canSeeTime === 0) return
-
-  if (videoTime > props.canSeeTime) {
-    isSeeking.value = true // 设置标志
-    currentVideo.currentTime = props.canSeeTime
-    currentVideo.pause()
-    emit('canSeePause')
-  }
+const initVideo = () => {
+  dp = new DPlayer({
+    container: document.getElementById('dplayer'),
+    autoplay: false,
+    video: {
+      url: 'https://sumaieshop.oss-cn-hangzhou.aliyuncs.com/product/20240920/cf650a3c-dded-4573-84e4-69bd20d72634.mp4',
+      pic: 'https://sumaieshop.oss-cn-hangzhou.aliyuncs.com/pod/material/20240920/1726831130839.png'
+    }
+  })
+  dp.seek(100)
+  dp.on('timeupdate', handleTimeupdate)
+  dp.on('seeked', handleSeeked())
 }
 
-const handleTimeupdate = (event) => {
-  const currentVideo: any = videoRef.value
-  const videoTime = currentVideo.currentTime.toFixed(2)
-
-  // 检查标志并处理
-  if (isSeeking.value) {
-    currentVideo.pause()
+const emit = defineEmits(['canSeePause', 'seekedSuccess'])
+const handleTimeupdate = () => {
+  const currentTime = dp.video.currentTime
+  if (currentTime > props.canSeeTime) {
+    dp.pause()
     emit('canSeePause')
-    event.preventDefault()
-  }
-  if (videoTime > props.canSeeTime) {
-    isSeeking.value = true // 设置标志
-    currentVideo.currentTime = props.canSeeTime
-    currentVideo.pause()
+    dp.seek(props.canSeeTime)
   }
 }
 
 const handleSeeked = () => {
-  const currentVideo: any = videoRef.value
-  if (isSeeking.value) {
-    currentVideo.pause()
-    currentVideo.currentTime = props.canSeeTime // 重新设置时间
-    isSeeking.value = false // 重置标志
+  const currentTime = dp.video.currentTime
+  if (currentTime > props.canSeeTime) {
+    dp.pause()
+    dp.seek(props.canSeeTime)
+    emit('seekedSuccess')
   }
-  emit('seekedSuccess')
 }
 
-// 这里可以添加 videoRef 的时间更新监听
+onMounted(() => {
+  initVideo()
+})
 </script>
 
 <style scoped lang="scss">
