@@ -157,6 +157,46 @@ const routes: RouteRecordRaw[] = [
       }
     ]
   },
+  /* video */
+  {
+    path: '/video',
+    name: 'Layout',
+    component: Layout,
+    redirect: '/video/index',
+    meta: {
+      title: 'video',
+      icon: 'Headset'
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'Video',
+        component: () => import('@/views/video/video/index.vue'),
+        meta: {
+          title: 'video',
+          icon: 'Headset'
+        }
+      },
+      {
+        path: 'dplayer',
+        name: 'DPlayer',
+        component: () => import('@/views/video/dplayer/index.vue'),
+        meta: {
+          title: 'DPlayer',
+          icon: 'Headset'
+        }
+      },
+      {
+        path: 'xgplayer',
+        name: 'XGPlayer',
+        component: () => import('@/views/video/xgplayer/index.vue'),
+        meta: {
+          title: 'XGPlayer',
+          icon: 'Headset'
+        }
+      }
+    ]
+  },
   /* 嵌套菜单 */
   {
     path: '/menus',
