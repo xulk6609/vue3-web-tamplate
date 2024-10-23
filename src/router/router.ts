@@ -117,6 +117,46 @@ const routes: RouteRecordRaw[] = [
       }
     ]
   },
+  /* 设计模式 */
+  {
+    path: '/designmode',
+    name: 'Layout',
+    component: Layout,
+    redirect: '/designmode/observe',
+    meta: {
+      title: 'observe',
+      icon: 'Headset'
+    },
+    children: [
+      {
+        path: 'observe',
+        name: 'Observe',
+        component: () => import('@/views/designMode/observe/index.vue'),
+        meta: {
+          title: '观察者',
+          icon: 'Headset'
+        }
+      },
+      {
+        path: 'eventbus',
+        name: 'Eventbus',
+        component: () => import('@/views/designMode/eventbus/index.vue'),
+        meta: {
+          title: '事件总线',
+          icon: 'Headset'
+        }
+      },
+      {
+        path: 'redux',
+        name: 'Redux',
+        component: () => import('@/views/designMode/redux/index.vue'),
+        meta: {
+          title: 'Redux',
+          icon: 'Headset'
+        }
+      }
+    ]
+  },
   /* 嵌套菜单 */
   {
     path: '/menus',

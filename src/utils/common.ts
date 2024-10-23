@@ -67,3 +67,108 @@ export async function asyncPool(poolLimit, iterable, iteratorFn) {
   // 返回所有结果
   return Promise.all(ret)
 }
+
+/* 手写发布/订阅模式 */
+export class Subject {
+  observers = []
+  addObserver(observer) {
+    console.log('add')
+    this.observers.push(observer)
+  }
+  removeObserver(observer) {
+    console.log('remove')
+    let index = this.observers.indexOf(observer)
+    if (index > 1) {
+      this.observers.splice(index, 1)
+    }
+  }
+  notity() {
+    console.log('notity')
+    this.observers.forEach((observer) => observer.update())
+  }
+}
+
+export class Observer {
+  update() {
+    console.log('update')
+  }
+  subscribeTo(subject) {
+    console.log('subscribeTo')
+    subject.addObserver(this)
+  }
+}
+
+/* 手写EventBus */
+export class EventBus {
+  map = {}
+
+  on(type, handler) {
+    this.map[type] = (this.map[type] || []).concat(handler)
+  }
+
+  emit(type, data) {
+    this.map[type] && this.map[type].forEach((handler) => handler(data))
+  }
+
+  off(type, handler) {
+    if (this.map[type]) {
+      if (!handler) {
+        delete this.map[type]
+      } else {
+        let index = this.map[type].indexOf(handler)
+        this.map[type].splice(index, 1)
+      }
+    }
+  }
+}
+
+export function createEventHub() {
+  const map = {}
+
+  return {
+    on(type, handler) {
+      map[type] = (map[type] || []).concat(handler)
+    },
+
+    fire(type, data) {
+      map[type] && map[type].forEach((handler) => handler(data))
+    }
+  }
+}
+
+/* redux */
+// export function createStore(initState) {
+//   let state = initState
+//   let handlers = []
+
+//   return {
+//     getState() {
+//       return state
+//     },
+//     changeState(newState) {
+//       state = newState
+//       handlers.forEach((handler) => handler())
+//     },
+//     subscribe(handler) {
+//       handlers.push(handler)
+//     }
+//   }
+// }
+
+export function createStore(reducer) {
+  let state
+  let handlers = []
+
+  return {
+    getState() {
+      return state
+    },
+    dispath(action) {
+      state = reducer(state, action)
+      handlers.forEach((handler) => handler)
+    },
+    subscribe(handler) {
+      handlers.push(handler)
+    }
+  }
+}
