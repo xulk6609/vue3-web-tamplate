@@ -32,7 +32,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: 'index',
-        name: 'Home',
+        name: 'HomeIndex',
         component: () => import('@/views/home/index.vue'),
         meta: {
           title: '首页',
@@ -50,7 +50,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: 'index',
-        name: 'Table',
+        name: 'TableIndex',
         component: () => import('@/views/table/index.vue'),
         meta: {
           title: '表格',
@@ -68,7 +68,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: 'index',
-        name: 'Axios',
+        name: 'AxiosIndex',
         component: () => import('@/views/axios/cancelToken/index.vue'),
         meta: {
           title: 'cancelToken',
@@ -170,7 +170,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: 'index',
-        name: 'Video',
+        name: 'VideoIndex',
         component: () => import('@/views/video/video/index.vue'),
         meta: {
           title: 'video',
