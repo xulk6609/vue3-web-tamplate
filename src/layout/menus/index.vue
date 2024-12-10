@@ -1,5 +1,5 @@
 <template>
-  <div class="menu" :style="{ width: isCollapse ? '65px' : '220px' }">
+  <div class="menu" :style="{ width: isCollapse ? '70px' : '220px' }">
     <div class="logo">
       <template v-if="!isCollapse">
         <img src="@/assets/images/logo.png" alt="avatar" />
