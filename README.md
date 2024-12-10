@@ -91,7 +91,6 @@ vue3, vue-router, vue-i18n, typescript, pinia, axios, element plus, vite
 
 - 使用 vite-plugin-mock 进行数据 mock
 
-[pure admin Mock](https://yiming_chang.gitee.io/pure-admin-doc/pages/request/#mock)
 [vite-plugin-mock](https://github.com/vbenjs/vite-plugin-mock/blob/main/README.zh_CN.md)
 
 ```mock
