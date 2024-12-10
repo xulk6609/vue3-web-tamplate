@@ -23,22 +23,22 @@
 import { ref } from 'vue'
 import { linkDataType } from '../index.d'
 const items = ref([
-  {
-    label: 'Dropshipping Fulfillment',
-    url: 'https://app.usadrop.com/'
-  },
-  {
-    label: 'Co-Funder',
-    url: 'https://funder.usadrop.com/home/index'
-  },
-  {
-    label: 'Payment',
-    url: 'https://app.usadrop.com/'
-  },
-  {
-    label: 'Quickfund',
-    url: 'https://app.usadrop.com/'
-  }
+  // {
+  //   label: 'Dropshipping Fulfillment',
+  //   url: 'https://app.usadrop.com/'
+  // },
+  // {
+  //   label: 'Co-Funder',
+  //   url: 'https://funder.usadrop.com/home/index'
+  // },
+  // {
+  //   label: 'Payment',
+  //   url: 'https://app.usadrop.com/'
+  // },
+  // {
+  //   label: 'Quickfund',
+  //   url: 'https://app.usadrop.com/'
+  // }
 ])
 const linkClick = (linkData: linkDataType) => {
   window.open(linkData.url)

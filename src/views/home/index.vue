@@ -48,7 +48,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, watchEffect } from 'vue'
 import adPagination from '@/components/adPagination/index.vue'
 
 defineOptions({
@@ -65,6 +65,17 @@ const pageData = ref({
 
 const handleSizeChange = () => {}
 const handleCurrentChange = () => {}
+
+let state = ref({ a: 1 })
+const k = state.value
+const n = k.a
+watchEffect(() => {
+  console.log('运行')
+  state.value.a // value、a
+})
+setTimeout(() => {
+  state.value = { a: 1 } // 要重新执行
+}, 500)
 </script>
 
 <style>
