@@ -77,9 +77,14 @@ const signIn = (formEl: FormInstance | undefined) => {
         username: formData.username,
         password: formData.password
       }
-      logIn(postData)
-      ElMessage.success('登录成功!')
-      router.push('/home')
+      logIn(postData).then((res) => {
+        if (res.success) {
+          ElMessage.success('登录成功!')
+          router.push('/home')
+        } else {
+          ElMessage.error(res.message)
+        }
+      })
     }
   })
 }
@@ -141,7 +146,7 @@ $color2: #15104b;
     }
   }
   .login-content {
-    width: 424px;
+    width: 500px;
     height: 708px;
     margin-top: -6%;
     background: #fff;

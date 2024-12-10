@@ -99,41 +99,10 @@ p {
 }
 #nprogress .spinner-icon {
   border-top-color: $primary-color !important;
-
-  border-lefs-color: $primary-color !important;
+  border-left-color: $primary-color !important;
 }
 #nprogress .peg {
   box-shadow:
     0 0 10px $primary-color,
     0 0 5px $primary-color !important;
-}
-
-// 公共的样式名
-.mb-24 {
-  margin-bottom: 24px;
-}
-.mb-20 {
-  margin-bottom: 24px;
-}
-.mt-24 {
-  margin-top: 24px;
-}
-.mt-20 {
-  margin-top: 24px;
-}
-.mr-10 {
-  margin: 10px;
-}
-.cursor {
-  color: var(--el-color-primary);
-  cursor: pointer;
-}
-.redcolor {
-  color: $red-color;
-}
-.graycolor {
-  color: #999999;
-}
-.fontbold {
-  font-weight: bold;
 }

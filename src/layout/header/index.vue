@@ -62,12 +62,14 @@ import Language from './components/language.vue'
 import assemblySize from './components/assemblySize.vue'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import ExternalLink from './components/externalLink.vue'
+import { EventBus } from '@/utils/common.ts'
 
 const menuStore = MenuStore()
 const globalStore = GlobalStore()
 const tabsStore = TabsStore()
 const route = useRoute()
 const router = useRouter()
+const eventBus = new EventBus()
 
 const { isCollapse } = storeToRefs(menuStore)
 const settingConfig = storeToRefs(globalStore).settingConfig
@@ -109,6 +111,12 @@ const setDrop = (opt: DropList) => {
     })
   }
 }
+
+// eventBus.on('test', (data) => {
+//   console.log(data)
+// })
+
+// eventBus.emit('test', 222)
 </script>
 
 <style lang="scss" scoped>

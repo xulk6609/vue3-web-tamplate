@@ -1,11 +1,26 @@
 <template>
   <div>
-    <Table :tableData="tableData" :columnList="columnList" />
+    <Table :tableData="tableData" :columnList="columnList">
+      <template #header-Shift="{ scope }">
+        <div class="text-[red] text-[24px] font-bold">
+          {{ scope.item.label }}
+        </div>
+      </template>
+
+      <template #Shift="{ scope }">
+        <div class="text-[red] text-[24px] font-bold">
+          {{ scope.row.Shift }}
+        </div>
+        <div>{{ scope.row.customerName }}</div>
+      </template>
+    </Table>
   </div>
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import Table from '@/components/adTable/index.vue'
+import { asyncPool } from '@/utils/common'
 
 const tableData = [
   {
@@ -44,6 +59,14 @@ const columnList = [
     prop: 'Operation'
   }
 ]
+
+onMounted(() => {
+  const timeout = (i: number) =>
+    new Promise((resolve) => setTimeout(() => resolve(i), i))
+  asyncPool(2, [1000, 5000, 3000, 2000], timeout).then((results) => {
+    console.log(results)
+  })
+})
 </script>
 
 <style lang="scss" scoped></style>

@@ -1,4 +1,5 @@
 # vue3-web-tamplate
+
 vue3 web 自用新模板
 
 vue3 学习项目
@@ -124,4 +125,8 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
 
 - `develop` 开发主分支
 - `myStudy` 自用学习分支
+  <<<<<<< HEAD
 
+=======
+
+> > > > > > > origin/develop

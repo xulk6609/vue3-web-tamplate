@@ -116,7 +116,7 @@ module.exports = {
       }
     ],
     // 禁用console
-    'no-console': 'error'
+    'no-console': 'ignore'
   }
   // 要在配置文件中禁用一组文件的规则
   // overrides: {},

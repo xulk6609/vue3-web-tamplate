@@ -65,7 +65,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@import "@/styles/var.scss";`
+          additionalData: `@use "@/styles/var.scss" as *;`
         }
       },
       postcss: {
@@ -73,7 +73,9 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
           postCssPxToRem({
             rootValue: 19.2, // 1rem的大小
             propList: ['*'] // 需要转换的属性，这里选择全部都进行转换
-          })
+          }),
+          require('tailwindcss'), // 确保 TailwindCSS 插件被加载
+          require('autoprefixer') // 确保 Autoprefixer 插件被加载
         ]
       }
     },
