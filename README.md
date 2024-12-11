@@ -2,8 +2,6 @@
 
 vue3 web 自用新模板
 
-vue3 学习项目
-
 ## 技术栈
 
 vue3, vue-router, vue-i18n, typescript, pinia, axios, element plus, vite
@@ -124,8 +122,4 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
 
 - `develop` 开发主分支
 - `myStudy` 自用学习分支
-  <<<<<<< HEAD
 
-=======
-
-> > > > > > > origin/develop
