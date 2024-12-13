@@ -1,6 +1,6 @@
 # vue3-web-tamplate
 
-vue3 web 新模板
+vue3 web 模板
 
 ## 技术栈
 
