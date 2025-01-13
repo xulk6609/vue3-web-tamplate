@@ -5,3 +5,17 @@ $red-color: #ff0000;
 :root {
   --el-border-radius-base: 6px !important;
 }
+
+// progress 进度条样式
+#nprogress .bar {
+  background: $primary-color !important;
+}
+#nprogress .spinner-icon {
+  border-top-color: $primary-color !important;
+  border-left-color: $primary-color !important;
+}
+#nprogress .peg {
+  box-shadow:
+    0 0 10px $primary-color,
+    0 0 5px $primary-color !important;
+}

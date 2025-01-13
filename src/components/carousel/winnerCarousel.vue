@@ -70,8 +70,8 @@ const items = ref([])
 </script>
 
 <style lang="scss" scoped>
-@import 'swiper/css';
-@import 'swiper/css/effect-cards';
+@use 'swiper/css';
+@use 'swiper/css/effect-cards';
 
 .winner-carousel {
   width: 100%;

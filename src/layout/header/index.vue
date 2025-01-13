@@ -30,7 +30,7 @@
       <div class="avatar">
         <el-dropdown trigger="click" @command="setDrop">
           <span>
-            <img src="@/assets/images/avatar.png" alt="avatar" />
+            <img src="@/assets/images/question.png" alt="avatar" />
           </span>
           <template #dropdown>
             <el-dropdown-menu>

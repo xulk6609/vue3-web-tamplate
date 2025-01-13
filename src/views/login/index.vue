@@ -1,6 +1,6 @@
 <template>
   <div class="aid-login">
-    <div class="login-info">
+    <!-- <div class="login-info">
       <img src="@/assets/images/login/logo.png" alt="" class="logo1" />
       <div class="welcome-title">
         <div class="fs-56 fw-800 color2">Welcome to</div>
@@ -28,10 +28,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="login-content">
-      <img src="@/assets/images/login/logo.svg" alt="" class="logo2" />
-      <p class="login-head">Welcome to USAdrop Ads-agency</p>
+      <!-- <img src="@/assets/images/login/logo.svg" alt="" class="logo2" /> -->
+      <p class="login-head">Login</p>
       <el-form
         label-position="top"
         :rules="rules"
@@ -90,14 +90,14 @@ const signIn = (formEl: FormInstance | undefined) => {
 }
 </script>
 <style lang="scss" scoped>
-@import './common.scss';
+@use './common.scss';
 $color1: #bc0c34;
 $color2: #15104b;
 .aid-login {
   width: 100%;
   height: calc(100vh - 94px);
   padding-top: 94px;
-  background: url('@/assets/images/login/loginBg.png') no-repeat;
+  // background: url('@/assets/images/login/loginBg.png') no-repeat;
   background-size: cover;
   text-align: center;
   display: flex;

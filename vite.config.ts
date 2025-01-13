@@ -1,4 +1,3 @@
-/// <reference types="vitest" />
 import type { ConfigEnv, UserConfig } from 'vite'
 // import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, loadEnv } from 'vite'
@@ -65,7 +64,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@use "@/styles/var.scss" as *;`
+          additionalData: `@use "@/styles/var.scss" as *;` // 这里是引入全局变量文件
         }
       },
       postcss: {
@@ -78,10 +77,6 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
           require('autoprefixer') // 确保 Autoprefixer 插件被加载
         ]
       }
-    },
-    // * 打包去除 console.log && debugger
-    esbuild: {
-      pure: viteEnv.VITE_DROP_CONSOLE ? ['console.log', 'debugger'] : []
     },
     build: {
       outDir: 'dist',
@@ -127,13 +122,13 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
           // rewrite: (path) => path.replace(/^\/api/, '')
         }
       }
-    },
-    test: {
-      // 启用类似 jest 的全局测试 API
-      globals: true,
-      // 使用 happy-dom 模拟 DOM
-      // 这需要你安装 happy-dom 作为对等依赖（peer dependency）
-      environment: 'happy-dom'
     }
+    // test: {
+    //   // 启用类似 jest 的全局测试 API
+    //   globals: true,
+    //   // 使用 happy-dom 模拟 DOM
+    //   // 这需要你安装 happy-dom 作为对等依赖（peer dependency）
+    //   environment: 'happy-dom'
+    // }
   }
 })

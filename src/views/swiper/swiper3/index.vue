@@ -50,8 +50,8 @@ const rightData = ref<RightDataItem[]>([])
 
 <style lang="scss" scoped>
 // // 局部引入，防止样式污染
-// @import 'swiper/css';
-// @import 'swiper/css/effect-cards';
+// @use 'swiper/css';
+// @use 'swiper/css/effect-cards';
 .carousel-swiper {
   width: 500px;
   height: 500px;

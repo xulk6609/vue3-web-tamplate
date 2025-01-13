@@ -2,7 +2,7 @@
   <div class="menu" :style="{ width: isCollapse ? '65px' : '220px' }">
     <div class="logo">
       <template v-if="!isCollapse">
-        <img src="@/assets/images/logo.png" alt="avatar" />
+        <!-- <img src="@/assets/images/logo.png" alt="avatar" /> -->
       </template>
       <template v-else="isCollapse">
         <span style="color: #ffffff">USA</span>
