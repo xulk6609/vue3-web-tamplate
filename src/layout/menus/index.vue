@@ -1,5 +1,5 @@
 <template>
-  <div class="menu" :style="{ width: isCollapse ? '65px' : '220px' }">
+  <div class="menu" :style="{ width: menuWidth }">
     <div class="logo">
       <template v-if="!isCollapse">
         <!-- <img src="@/assets/images/logo.png" alt="avatar" /> -->
@@ -11,11 +11,11 @@
     <el-menu
       :default-active="route.path"
       background-color="#15104b"
-      :default-openeds="defaultOpens"
       :collapse="isCollapse"
       text-color="#fff"
       active-text-color="#3F6AFF"
       popper-class="side-menu"
+      :collapse-transition="false"
       router
     >
       <menu-item
@@ -43,7 +43,9 @@ const menus: any = computed(() => router.options.routes)
 
 const { isCollapse } = storeToRefs(menuStore)
 
-const defaultOpens = ref(['/wallet', '/facebook'])
+const menuWidth = computed(() => {
+  return isCollapse.value ? '65px' : '220px'
+})
 </script>
 
 <style lang="scss" scoped>

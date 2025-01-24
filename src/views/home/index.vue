@@ -33,7 +33,7 @@
   </el-menu>
   <div>{{ $t('tabs.closeCurrent') }}</div>
 
-  <div class="text-3xl font-bold underline">Hello world!</div>
+  <!-- <div class="text-3xl font-bold underline">Hello world!</div> -->
   <p class="text-blue-600">The quick brown fox...</p>
 
   <div>
