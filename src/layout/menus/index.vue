@@ -3,9 +3,10 @@
     <div class="logo">
       <template v-if="!isCollapse">
         <!-- <img src="@/assets/images/logo.png" alt="avatar" /> -->
+        LOGO
       </template>
       <template v-else="isCollapse">
-        <span style="color: #ffffff">USA</span>
+        <span style="color: #ffffff">L</span>
       </template>
     </div>
     <el-menu
@@ -95,6 +96,7 @@ const menuWidth = computed(() => {
   align-items: center;
   padding: 5px 15px;
   position: relative;
+  color: #fff;
   &::before {
     content: '';
     position: absolute;

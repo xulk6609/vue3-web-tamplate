@@ -54,6 +54,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     ],
     resolve: {
       alias: {
+        // '@': fileURLToPath(new URL('./src', import.meta.url))
         '@': path.join(__dirname, 'src')
       }
     },
@@ -63,6 +64,16 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
         scss: {
           additionalData: `@use "@/styles/var.scss" as *;` // 这里是引入全局变量文件
         }
+      },
+      postcss: {
+        plugins: [
+          // postCssPxToRem({
+          //   rootValue: 19.2, // 1rem的大小
+          //   propList: ['*'] // 需要转换的属性，这里选择全部都进行转换
+          // }),
+          require('tailwindcss'), // 确保 TailwindCSS 插件被加载
+          require('autoprefixer') // 确保 Autoprefixer 插件被加载
+        ]
       }
     },
     build: {
@@ -110,5 +121,12 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
         }
       }
     }
+    // test: {
+    //   // 启用类似 jest 的全局测试 API
+    //   globals: true,
+    //   // 使用 happy-dom 模拟 DOM
+    //   // 这需要你安装 happy-dom 作为对等依赖（peer dependency）
+    //   environment: 'happy-dom'
+    // }
   }
 })
