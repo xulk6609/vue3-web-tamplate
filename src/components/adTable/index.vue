@@ -12,7 +12,6 @@
       v-bind="item"
     >
       <template #header="scope">
-        <!-- 扩展item -->
         <slot :name="'header-' + item.prop" :scope="{ ...scope, item }">
           <span>{{ item.label }}</span>
         </slot>

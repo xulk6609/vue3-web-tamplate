@@ -29,12 +29,21 @@
               :placeholder="item.placeholder ? item.placeholder : '请输入'"
               v-model="formData[item.prop]"
             >
-              <template :v-slot="item.slotName">
+              <!-- <template :v-slot="item.slotName">
                 <slot
                   :name="item.prop"
                   :scope="item"
                   :formData="formData"
                 ></slot>
+              </template> -->
+
+              <!-- 透传插槽 -->
+              <template
+                v-for="(slotFn, name) in $slots"
+                :key="name"
+                #[name]="slotProps"
+              >
+                <slot :name="name" v-bind="slotProps" />
               </template>
             </el-input>
           </el-form-item>
