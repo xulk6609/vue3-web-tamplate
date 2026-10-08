@@ -259,15 +259,15 @@ const routes: RouteRecordRaw[] = [
       }
     ]
   },
-  // fabric
+  /* 图表 */
   {
-    path: '/fabric',
-    name: 'fabric',
+    path: '/charts',
+    name: 'charts',
     component: Layout,
-    redirect: '/fabric/curvetext',
+    redirect: '/charts/curvetext',
     meta: {
-      title: 'fabric',
-      icon: 'Menu'
+      title: '图表',
+      icon: 'DataLine'
     },
     children: [
       {
@@ -278,26 +278,22 @@ const routes: RouteRecordRaw[] = [
           title: '曲线文字',
           icon: 'FolderRemove'
         }
-      }
-    ]
-  },
-  /* echarts */
-  {
-    path: '/echarts',
-    name: 'echarts',
-    component: Layout,
-    redirect: '/echarts/line',
-    meta: {
-      title: 'Echarts',
-      icon: 'Menu'
-    },
-    children: [
+      },
       {
         path: 'line',
         name: 'Line',
         component: () => import('@/views/echarts/line/index.vue'),
         meta: {
           title: '折线图',
+          icon: 'FolderRemove'
+        }
+      },
+      {
+        path: 'graph',
+        name: 'Graph',
+        component: () => import('@/views/charts/graph/index.vue'),
+        meta: {
+          title: '知识图谱',
           icon: 'FolderRemove'
         }
       }
