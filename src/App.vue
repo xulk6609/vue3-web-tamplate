@@ -3,6 +3,8 @@
     <el-config-provider :locale="i18nLocale" :size="assemblySize">
       <RouterView />
     </el-config-provider>
+    <!-- Stagewise -->
+    <StagewiseToolbar v-if="isDev" :config="{ plugins: [VuePlugin] }" />
   </div>
 </template>
 
@@ -11,12 +13,16 @@ import { computed } from 'vue'
 import { RouterView } from 'vue-router'
 import { GlobalStore } from '@/store/modules/global'
 import { storeToRefs } from 'pinia'
+import { StagewiseToolbar } from '@stagewise/toolbar-vue'
+import VuePlugin from '@stagewise-plugins/vue'
 // 配置element中英文
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import en from 'element-plus/es/locale/lang/en'
 // 使用主题
 import { useTheme } from '@/hooks/useTheme'
 useTheme()
+
+const isDev = import.meta.env.DEV // 只在开发环境显示
 
 const globalStore = GlobalStore()
 const { assemblySize, language } = storeToRefs(globalStore)
