@@ -1,22 +1,6 @@
 <template>
   <div class="graph-page">
-    <div class="graph-card">
-      <div class="graph-head">
-        <div>
-          <h2 class="graph-title">知识图谱</h2>
-          <p class="graph-desc">
-            节点颜色表示类型，连线表示关系。拖拽节点、滚轮缩放，悬停查看说明。
-          </p>
-        </div>
-        <div class="legend" aria-label="节点类型">
-          <span v-for="item in categories" :key="item.name" class="legend-item">
-            <i class="legend-dot" :style="{ background: item.color }"></i>
-            {{ item.name }}
-          </span>
-        </div>
-      </div>
-      <div ref="chartRef" class="graph-canvas"></div>
-    </div>
+    <div ref="chartRef" class="graph-canvas"></div>
   </div>
 </template>
 
@@ -27,114 +11,135 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 const chartRef = ref<HTMLDivElement>()
 let chart: echarts.ECharts | null = null
 
-const categories = [
-  { name: '主题', color: '#2a78d6' },
-  { name: '概念', color: '#eb6834' },
-  { name: '实体', color: '#1baf7a' }
+const clusters = [
+  { name: '科研机构', color: '#f5a623', size: 34, leaf: 18 },
+  { name: '重点企业', color: '#3cb87a', size: 34, leaf: 18 },
+  { name: '相关技术', color: '#8fd14f', size: 34, leaf: 18 },
+  { name: '相关专家', color: '#1aa6b7', size: 34, leaf: 18 }
 ]
+
+const leaves: Record<string, string[]> = {
+  科研机构: [
+    '哈尔滨工业大学',
+    '中国科学院上海微系统与信息技术研究所',
+    '中国科学院大连化学物理研究所',
+    '天津大学',
+    '盐城师范学院',
+    '电子科技大学中山学院',
+    '中国船舶重工集团公司第七一二研究所',
+    '武汉船用电力推进装置研究所'
+  ],
+  重点企业: [
+    '江苏乐能电池股份有限公司',
+    '双登集团股份有限公司',
+    '风帆储能科技有限公司',
+    '江苏永达电源股份有限公司',
+    '深圳市比亚迪锂电池有限公司',
+    '浙江超威电源有限公司',
+    '天能电子科技集团有限公司',
+    '贵州梅岭电源有限公司'
+  ],
+  相关技术: [
+    '燃料电池',
+    '锂电池',
+    '比容量',
+    '蓄电池',
+    '铅蓄电池',
+    '铅酸蓄电池',
+    '能量密度',
+    '超级电容器'
+  ],
+  相关专家: [
+    '曹余良',
+    '高立军',
+    '吴浩青',
+    '石世光',
+    '王媛珍',
+    '王京亮',
+    '丁建民',
+    '吴明霞'
+  ]
+}
 
 const nodes = [
-  { id: 'kg', name: '知识图谱', category: 0, symbolSize: 64 },
-  { id: 'entity', name: '实体', category: 1, symbolSize: 46 },
-  { id: 'relation', name: '关系', category: 1, symbolSize: 46 },
-  { id: 'attr', name: '属性', category: 1, symbolSize: 46 },
-  { id: 'person', name: '人物', category: 2, symbolSize: 36 },
-  { id: 'org', name: '组织', category: 2, symbolSize: 36 },
-  { id: 'place', name: '地点', category: 2, symbolSize: 36 },
-  { id: 'belong', name: '属于', category: 2, symbolSize: 36 },
-  { id: 'locate', name: '位于', category: 2, symbolSize: 36 },
-  { id: 'name', name: '名称', category: 2, symbolSize: 32 },
-  { id: 'time', name: '时间', category: 2, symbolSize: 32 }
+  {
+    id: 'root',
+    name: '比能量',
+    symbolSize: 78,
+    category: 0,
+    label: { fontSize: 15, fontWeight: 600 }
+  },
+  ...clusters.flatMap((cluster, index) => {
+    const hub = {
+      id: cluster.name,
+      name: cluster.name,
+      symbolSize: cluster.size,
+      category: index + 1
+    }
+    const children = leaves[cluster.name].map((name) => ({
+      id: `${cluster.name}-${name}`,
+      name,
+      symbolSize: cluster.leaf,
+      category: index + 1
+    }))
+    return [hub, ...children]
+  })
 ]
 
-const links = [
-  { source: 'kg', target: 'entity' },
-  { source: 'kg', target: 'relation' },
-  { source: 'kg', target: 'attr' },
-  { source: 'entity', target: 'person' },
-  { source: 'entity', target: 'org' },
-  { source: 'entity', target: 'place' },
-  { source: 'relation', target: 'belong' },
-  { source: 'relation', target: 'locate' },
-  { source: 'attr', target: 'name' },
-  { source: 'attr', target: 'time' },
-  { source: 'person', target: 'belong' },
-  { source: 'org', target: 'locate' },
-  { source: 'place', target: 'name' }
-]
-
-const tips: Record<string, string> = {
-  知识图谱: '用节点和边描述事物及其关系的结构化网络',
-  实体: '图谱中可独立指称的对象',
-  关系: '实体之间的有向联系',
-  属性: '实体自身携带的特征',
-  人物: '实体的一种：自然人',
-  组织: '实体的一种：机构、公司、团体',
-  地点: '实体的一种：地理位置',
-  属于: '从属关系，如人物属于组织',
-  位于: '空间关系，如组织位于地点',
-  名称: '用来称呼实体的字符串',
-  时间: '事件或状态发生的时间点'
-}
+const links = clusters.flatMap((cluster) => [
+  { source: 'root', target: cluster.name },
+  ...leaves[cluster.name].map((name) => ({
+    source: cluster.name,
+    target: `${cluster.name}-${name}`
+  }))
+])
 
 const initChart = () => {
   if (!chartRef.value) return
-  chart = echarts.getInstanceByDom(chartRef.value) ?? echarts.init(chartRef.value)
+  chart =
+    echarts.getInstanceByDom(chartRef.value) ?? echarts.init(chartRef.value)
 
   chart.setOption({
     backgroundColor: 'transparent',
-    tooltip: {
-      trigger: 'item',
-      backgroundColor: '#fcfcfb',
-      borderColor: '#e6e4df',
-      borderWidth: 1,
-      textStyle: { color: '#0b0b0b', fontSize: 13 },
-      extraCssText: 'box-shadow: 0 6px 20px rgba(11,11,11,0.08); border-radius: 8px;',
-      formatter: (params: { dataType?: string; name?: string }) => {
-        if (params.dataType !== 'node' || !params.name) return ''
-        const category = nodes.find((node) => node.name === params.name)
-        const kind = category ? categories[category.category].name : ''
-        return `<div style="font-weight:600;margin-bottom:4px">${params.name}</div>
-          <div style="color:#52514e">${kind} · ${tips[params.name] ?? ''}</div>`
-      }
-    },
+    tooltip: { show: false },
     series: [
       {
         type: 'graph',
         layout: 'force',
         roam: true,
         draggable: true,
-        categories: categories.map((item) => ({
-          name: item.name,
-          itemStyle: { color: item.color }
-        })),
-        data: nodes.map((node) => ({
-          ...node,
-          label: { show: true }
-        })),
+        center: ['50%', '50%'],
+        categories: [
+          { name: '主题', itemStyle: { color: '#2f6fed' } },
+          ...clusters.map((cluster) => ({
+            name: cluster.name,
+            itemStyle: { color: cluster.color }
+          }))
+        ],
+        data: nodes,
         links,
         force: {
-          repulsion: 420,
-          edgeLength: [80, 140],
-          gravity: 0.12
+          repulsion: 260,
+          edgeLength: [46, 120],
+          gravity: 0.08,
+          friction: 0.6
         },
         lineStyle: {
-          color: '#c3c2b7',
+          color: 'source',
           width: 1.5,
-          curveness: 0.08
+          opacity: 0.85,
+          curveness: 0.18
+        },
+        label: {
+          show: true,
+          position: 'top',
+          distance: 4,
+          color: '#4a4a4a',
+          fontSize: 12
         },
         emphasis: {
           focus: 'adjacency',
           lineStyle: { width: 2.5 }
-        },
-        label: {
-          color: '#0b0b0b',
-          fontSize: 13,
-          fontWeight: 500
-        },
-        itemStyle: {
-          borderColor: '#fcfcfb',
-          borderWidth: 2
         }
       }
     ]
@@ -158,62 +163,14 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 .graph-page {
   height: 100%;
-  min-height: 640px;
-}
-
-.graph-card {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  background: #fcfcfb;
-  border: 1px solid #e6e4df;
-  border-radius: 12px;
-  padding: 20px 20px 12px;
-}
-
-.graph-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 24px;
-}
-
-.graph-title {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: #0b0b0b;
-}
-
-.graph-desc {
-  margin: 6px 0 0;
-  font-size: 13px;
-  color: #52514e;
-}
-
-.legend {
-  display: flex;
-  gap: 16px;
-  flex-shrink: 0;
-  padding-top: 4px;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  color: #52514e;
-}
-
-.legend-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
+  min-height: 680px;
+  background: #f7f8fb;
+  border-radius: 8px;
 }
 
 .graph-canvas {
-  flex: 1;
-  min-height: 520px;
+  width: 100%;
+  height: 100%;
+  min-height: 680px;
 }
 </style>
